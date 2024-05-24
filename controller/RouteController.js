@@ -1,13 +1,19 @@
 const Record = require('../Models/record.js');
 
 exports.getRecords = async (req, res) => {
+    let {id} = req.params;
     try {
         const records = await Record.find();
+        if (!records) {
+            // No records found with the given id
+            return res.status(404).send('No records found');
+        }
         res.render('record/index.ejs', { records, currUser: req.user });
     } catch (err) {
         res.status(500).send(err);
     }
 };
+
 
 
 exports.createRecord = async (req, res) => {

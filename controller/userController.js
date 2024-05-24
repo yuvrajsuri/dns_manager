@@ -16,7 +16,7 @@ module.exports.signup = async(req,res)=>{
             if(err){
                 return next(err);
             }
-            req.flash("success", "Welcome to trippy");
+            req.flash("success", "Welcome to DNS Manager");
             res.redirect("/");
         });
     }
@@ -34,7 +34,7 @@ module.exports.renderLoginForm = (req,res)=>{
 
 //login
 module.exports.login = async(req,res)=>{
-    req.flash("success","Welcome back to trippy");
+    req.flash("success","Welcome back to DNS Manager");
     let redirectUrl = res.locals.redirectUrl || "/";
     res.redirect(redirectUrl);
 };

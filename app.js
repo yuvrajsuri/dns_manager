@@ -6,22 +6,21 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 
-// const listingRoute = require("./routes/listingroute.js");
-// const ReviewRoute = require("./routes/reviewroute.js");
+
 const recordRoute = require("./Routes/recordRoute.js")
 const UserRoute = require("./routes/userRoute.js");
 
 
 const session = require("express-session");
-const MongoStore = require('connect-mongo');
+
 
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./Models/User.js");
 
-const dbUrl = process.env.ATLASDB_URL;
-//'mongodb://127.0.0.1:27017/trippy'
+
+
 
 main()
 .then((res)=>{
@@ -40,43 +39,16 @@ app.use(methodOverride("_method"));
 app.engine('ejs',ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
-// const store = MongoStore.create({
-//     mongoUrl : dbUrl,
-//     crypto : {
-//         secret : process.env.SECRET
-//     },
-//     touchAfter : 24*3600
-// });
-
-// store.on("error",(err)=>{
-//     console.log("ERROR IN MONGO SESSION STORE",err);
-// });
-
-// const sessionOptions = {
-//     store,
-//     secret : process.env.SECRET,
-//     resave : false ,
-//     saveUninitialized : true,
-//     cookie : 
-//     {
-//         expires : Date.now() + 7 * 24 * 60 * 60 * 1000,
-//         maxAge : 7 * 24 * 60 * 60 * 1000,
-//         httpOnly: true,
-//     },
-// };
-
-// app.get("/",(req,res)=>{
-//     res.send("root is working");
-// });
+// 
 
 app.use(session({
-    secret: 'your_secret_key', // replace with your secret key
+    secret: 'your_secret_key', // will replace it soon
     resave: false,
     saveUninitialized: true
   }));
   app.use(flash());
   
-  // Set global variables for flash messages
+  // flash messages
   app.use((req, res, next) => {
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
@@ -94,25 +66,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// app.get("/demouser",async(req,res)=>{
-//     let fakeUser = new User({
-//         email:"student@gmail.com",
-//         username:"student",
-//     });
-//     let registeredUser = await User.register(fakeUser, "helloworld");
-//     res.send(registeredUser);
-// });
 
-// app.use((req,res,next)=>{
-//     res.locals.success = req.flash("success");
-//     res.locals.error = req.flash("error");
-//     res.locals.currUser = req.user;
-//     next();
-// });
-
-
-// app.use("/listings", listingRoute);
-// app.use("/listings/:id/reviews", ReviewRoute);
 app.use('/', recordRoute);
 app.use("/", UserRoute);
 
@@ -133,16 +87,3 @@ app.use((err,req,res,next)=>{
 app.listen("3000",()=>{
     console.log("Server listening to port 3000");
 });
-
-// app.get("/testlisting", wrapAsync(async (req,res)=>{
-//     let samplelisting = new Listing({
-//         title:"My new Villa",
-//         description:"By the Beach",
-//         price:1500,
-//         location:"Calangute, Goa",
-//         country:"India",
-//     });
-//     await samplelisting.save();
-//     console.log("sample was saved");
-//     res.send("successful testing");
-// }));

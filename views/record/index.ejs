@@ -58,14 +58,10 @@
             <td><%= record.type %></td>
             <td><%= record.value %></td>
             <td>
-                <% if (currUser && currUser._id.equals(record.owner._id)) { %>
-                    <div class="btns">
-                      <a href="/records/<%= record._id %>/edit" class="btn btn-dark btn-sm edit-btn">Edit</a>
-                      <form action="/records/<%= record._id %>?_method=DELETE" method="POST" style="display: inline">
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                      </form>
-                    </div>
-                    <% } %>
+              <button class="btn btn-primary btn-sm" onclick="editRecord('<%= record._id %>')">Edit</button>
+              <form action="/api/records/delete/<%= record._id %>" method="POST" style="display: inline">
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              </form>
             </td>
           </tr>
           <% }) %>
