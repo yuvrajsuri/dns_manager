@@ -3,11 +3,12 @@ const Record = require('../Models/record.js');
 exports.getRecords = async (req, res) => {
     try {
         const records = await Record.find();
-        res.render('record/index.ejs', { records });
+        res.render('record/index.ejs', { records, currUser: req.user });
     } catch (err) {
         res.status(500).send(err);
     }
 };
+
 
 exports.createRecord = async (req, res) => {
     try {

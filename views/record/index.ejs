@@ -1,42 +1,43 @@
 <% layout("/layouts/boilerplate") %>
 
 <style>
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgb(0,0,0);
-      background-color: rgba(0,0,0,0.4);
-      padding-top: 60px;
-    }
-    .modal-content {
-      background-color: #fefefe;
-      margin: 5% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-    }
-  </style>
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+  }
+  .modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+</style>
 
 <body>
   <div class="container mt-4">
     <div class="d-flex justify-content-end mb-3">
-        <%if(!currUser){%>
-      <a class="btn btn-outline-primary mr-2" href="/signup">Sign Up</a>
-      <a class="btn btn-outline-secondary" href="/login">Log In</a>
-      <%}%>
-      <%if(currUser){%>
-      <a class="btn btn-outline-secondary" href="/logout">Logout</a>
-      <%}%>
+        <% if (!currUser) { %>
+          <a class="btn btn-outline-primary mr-2" href="/signup">Sign Up</a>
+          <a class="btn btn-outline-secondary" href="/login">Log In</a>
+        <% } else { %>
+          <a class="btn btn-outline-secondary" href="/logout">Logout</a>
+        <% } %>
     </div>
     <h1 class="mb-4 text-center">DNS Manager</h1>
+    <% if (currUser) { %>
     <div class="d-flex justify-content-between mb-3">
       <button class="btn btn-success" onclick="document.getElementById('addRecordModal').style.display='block'">Add Record</button>
+      <%}%>
       <input type="text" id="searchInput" class="form-control w-25" placeholder="Search..." />
     </div>
     <div class="container mt-5">
@@ -57,10 +58,14 @@
             <td><%= record.type %></td>
             <td><%= record.value %></td>
             <td>
-              <button class="btn btn-primary btn-sm" onclick="editRecord('<%= record._id %>')">Edit</button>
-              <form action="/api/records/delete/<%= record._id %>" method="POST" style="display: inline">
-                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-              </form>
+                <% if (currUser && currUser._id.equals(record.owner._id)) { %>
+                    <div class="btns">
+                      <a href="/records/<%= record._id %>/edit" class="btn btn-dark btn-sm edit-btn">Edit</a>
+                      <form action="/records/<%= record._id %>?_method=DELETE" method="POST" style="display: inline">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                      </form>
+                    </div>
+                    <% } %>
             </td>
           </tr>
           <% }) %>
@@ -111,5 +116,5 @@
     </div>
   </div>
 
-    <script src="/js/script.js"></script>
-  </body>
+  <script src="/js/script.js"></script>
+</body>
