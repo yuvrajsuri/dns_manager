@@ -33,7 +33,7 @@
     });
 });
 
-function editRecord(id) {
-    // Implement edit record functionality
-    alert('Edit record functionality is not yet implemented');
-}
+// function editRecord(id) {
+//     // Implement edit record functionality
+//     alert('Edit record functionality is not yet implemented');
+// }
