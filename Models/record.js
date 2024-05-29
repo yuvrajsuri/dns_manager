@@ -20,6 +20,10 @@ const recordSchema = new mongoose.Schema({
     owner:{
         type : Schema.Types.ObjectId,
         ref : "User",
+    },
+    ttl:{
+        type:Number,
+        required:true
     }
 });
 

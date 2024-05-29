@@ -21,7 +21,7 @@ exports.createRecord = async (req, res) => {
     const userId = req.user._id;
 
     // Extract other record details from the request body
-    const { domain, type, value } = req.body;
+    const { domain, type, value, ttl } = req.body;
 
     try {
         // Create a new record with the owner ID set to the user ID
@@ -29,6 +29,7 @@ exports.createRecord = async (req, res) => {
             domain,
             type,
             value,
+            ttl,
             owner: userId // Set the owner field to the user ID
         });
 

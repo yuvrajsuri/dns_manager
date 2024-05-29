@@ -33,6 +33,19 @@
     });
 });
 
+// document.getElementById('searchInput').addEventListener('input', function() {
+//   const filter = this.value.toLowerCase();
+//   const rows = document.getElementById('recordTable').getElementsByTagName('tr');
+//   Array.from(rows).forEach(row => {
+//       const domain = row.getElementsByTagName('td')[0].textContent.toLowerCase();
+//       if (domain.indexOf(filter) > -1) {
+//           row.style.display = '';
+//       } else {
+//           row.style.display = 'none';
+//       }
+//   });
+// });
+
 // function editRecord(id) {
 //     // Implement edit record functionality
 //     alert('Edit record functionality is not yet implemented');
